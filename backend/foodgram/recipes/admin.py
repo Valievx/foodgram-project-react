@@ -36,7 +36,7 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Recipes)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'author',]
+    list_display = ['id', 'name', 'author']
     search_fields = ['name', 'author__username']
     list_filter = ['tags']
     empty_value_display = '-пусто-'

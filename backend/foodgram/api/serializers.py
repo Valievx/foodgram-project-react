@@ -66,7 +66,7 @@ class RecipeIngredientSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'amount',]
+        fields = ['id', 'amount']
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -274,11 +274,11 @@ class ShoppingCartSerializer(serializers.ModelSerializer):
     """ Сериализатор Корзины Покупок """
     class Meta:
         model = Recipes
-        fields = ['id', 'name', 'image', 'cooking_time',]
+        fields = ['id', 'name', 'image', 'cooking_time']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
     """ Сериализатор Избранного"""
     class Meta:
         model = Favorite
-        fields = ['user', 'recipe',]
+        fields = ['user', 'recipe']

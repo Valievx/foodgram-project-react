@@ -28,8 +28,7 @@ class CustomUser(AbstractUser):
         verbose_name='username',
         validators=[RegexValidator(
             regex=r'^[\w.@+-]+\Z',
-            message='Недопустимые символы'
-            )
+            message='Недопустимые символы')
         ]
     )
 
