@@ -1,6 +1,10 @@
 version: '3.3'
 services:
 
+  backend:
+    build: ../backend/
+
+
   frontend:
     build:
       context: ../frontend
@@ -15,3 +19,26 @@ services:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ../frontend/build:/usr/share/nginx/html/
       - ../docs/:/usr/share/nginx/html/api/docs/
+
+
+
+#volumes:
+#  pg_data_kittygram:
+#  static:
+#  media:
+#
+#services:
+#  db:
+#    image: postgres:13
+#    env_file: .env
+#    volumes:
+#      - pg_data_kittygram:/var/lib/postgresql/data
+#
+#  backend:
+#    build: ./backend/
+#    env_file: .env
+#    depends_on:
+#      - db
+#    volumes:
+#      - static:/backend_static
+#      - media:/app/media/
