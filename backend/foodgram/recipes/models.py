@@ -80,8 +80,14 @@ class Recipes(models.Model):
             message='Время приготовления не менее 1 минуты!'
         )]
     )
-    ingredients = models.ManyToManyField(Ingredients)
-    tags = models.ManyToManyField(Tag)
+    ingredients = models.ManyToManyField(
+        Ingredients,
+        through='RecipeIngredient'
+    )
+    tags = models.ManyToManyField(
+        Tag,
+        through='RecipeTag'
+    )
 
     class Meta:
         verbose_name = 'Рецепт'

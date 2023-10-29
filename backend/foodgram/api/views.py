@@ -23,13 +23,14 @@ from .serializers import (RecipeSerializer, RecipeCreateSerializer,
                           ShoppingCartSerializer, FavoriteSerializer)
 
 
-class IngredientViewSet(viewsets.ModelViewSet):
+class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     """ Отображение Ингредиентов """
     queryset = Ingredients.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (AllowAny,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('^name',)
+    pagination_class = None
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
@@ -37,21 +38,21 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (AllowAny,)
+    pagination_class = None
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """ Отображение Рецептов"""
-    serializer_class = RecipeSerializer
     queryset = Recipes.objects.all()
     permission_classes = [IsAuthorOrAdminOrReadOnly]
     pagination_class = CustomPagination
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend,]
     filterset_class = RecipeFilter
 
-    def request_serializer_class(self):
-        if self.request.method in ('POST', 'PATCH',):
-            return RecipeCreateSerializer
-        return RecipeSerializer
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return RecipeSerializer
+        return RecipeCreateSerializer
 
 
 class SubscribeView(APIView):
@@ -96,7 +97,7 @@ class ShowSubscribeView(ListAPIView):
     pagination_class = CustomPagination
 
     def get(self, request):
-        queryset = CustomUser.objects.filter(subscriber__author=request.user)
+        queryset = CustomUser.objects.filter(subscribing__user=request.user)
         page = self.paginate_queryset(queryset)
         serializer = ShowSubscribeSerializer(
             page, many=True, context={'request': request})
