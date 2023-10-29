@@ -115,8 +115,6 @@ USE_L10N = True
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
